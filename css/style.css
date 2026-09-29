@@ -1,0 +1,994 @@
+:root {
+    /* ===== Cores primitivas ===== */
+    --color-primary: #171B4D;
+    --color-secondary: #5B2A86;
+    --color-accent: #7C4DFF;
+
+    --color-black: #0B0B0F;
+    --color-white: #FFFFFF;
+    --color-gray: #F2F2F6;
+    --color-gray-dark: #5D5D68;
+
+    --color-success: #247A4D;
+    --color-error: #B42318;
+    --color-info: #3155A6;
+
+    /* ===== Tokens semânticos (funcionais) ===== */
+    --bg-page: var(--color-white);
+    --bg-surface: var(--color-white);
+    --bg-inverse: var(--color-black);
+
+    --text-primary: var(--color-black);
+    --text-secondary: var(--color-gray-dark);
+    --text-inverse: var(--color-white);
+    --text-link: var(--color-secondary);
+
+    --border-default: #CFCFD8;
+    --border-subtle: #E1E1E8;
+    --border-focus: var(--color-secondary);
+
+    --state-success-bg: #DFF2E8;
+    --state-success-text: var(--color-success);
+    --state-error-bg: #FBEAE8;
+    --state-error-text: var(--color-error);
+    --state-info-bg: #EEF3FF;
+    --state-info-text: #18326D;
+
+    --font-xs: 0.875rem;
+    --font-sm: 1rem;
+    --font-md: 1.125rem;
+    --font-lg: 2rem;
+    --font-xl: 2.5rem;
+
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+
+    --shadow-sm: 0 4px 12px rgba(11, 11, 15, 0.10);
+    --shadow-md: 0 10px 28px rgba(11, 11, 15, 0.16);
+
+    --transition: 0.25s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    width: 100%;
+    min-height: 80px;
+    padding: var(--space-2) 5%;
+    background: var(--bg-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    position: relative;
+    z-index: 1000;
+}
+
+.logo {
+    width: 130px;
+    height: auto;
+    border-radius: var(--radius-sm);
+}
+
+.logo-link {
+    display: block;
+}
+
+/* =========================
+   NAVEGAÇÃO
+========================= */
+
+.main-nav > ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+}
+
+.main-nav a,
+.submenu-toggle {
+    color: var(--text-inverse);
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.main-nav a:hover,
+.submenu-toggle:hover {
+    background: var(--color-secondary);
+}
+.main-nav a.active {
+    background: var(--color-secondary);
+}
+.main-nav a:focus-visible,
+.submenu-toggle:focus-visible,
+.button:focus-visible,
+.menu-toggle:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 210px;
+    background: var(--bg-inverse);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1);
+    box-shadow: var(--shadow-md);
+}
+
+.has-submenu:hover > .submenu,
+.has-submenu:focus-within > .submenu {
+    display: block;
+}
+
+.submenu li {
+    width: 100%;
+}
+
+.submenu a {
+    display: block;
+    width: 100%;
+}
+
+/* =========================
+   MENU HAMBÚRGUER
+========================= */
+
+.menu-toggle {
+    display: none;
+    width: 46px;
+    height: 42px;
+    border: 1px solid var(--text-inverse);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin: 5px 0;
+    background: var(--text-inverse);
+    border-radius: 10px;
+    transition: transform var(--transition);
+}
+
+/* =========================
+   GRID PRINCIPAL
+   Base de 12 colunas usada em todas as seções.
+   Cada breakpoint abaixo redefine quantas dessas
+   12 colunas cada bloco de conteúdo ocupa.
+========================= */
+
+.grid-section {
+    width: min(90%, 1200px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--space-3);
+    row-gap: var(--space-4);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 520px;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+    align-items: center;
+}
+
+.hero-content {
+    grid-column: 2 / span 8;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #EAE5F5;
+    color: var(--color-secondary);
+    font-size: var(--font-xs);
+    font-weight: bold;
+    margin-bottom: var(--space-2);
+}
+
+.badge-primary {
+    background: var(--color-secondary);
+    color: var(--text-inverse);
+}
+
+.badge-secondary {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+.badge-success {
+    background: var(--state-success-bg);
+    color: var(--state-success-text);
+}
+
+.badge-light {
+    background: var(--bg-surface);
+    color: var(--color-primary);
+}
+
+.hero h1 {
+    font-size: var(--font-xl);
+    line-height: 1.15;
+    margin-bottom: var(--space-3);
+}
+
+.hero p {
+    max-width: 760px;
+    font-size: var(--font-md);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* =========================
+   BOTÕES
+========================= */
+
+.button {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition),
+        border-color var(--transition);
+}
+
+.button-primary {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+.button-primary:hover {
+    background: var(--color-secondary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.button-primary:focus {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.button-primary:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.button-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.button-secondary:hover {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-sm);
+}
+
+.button-light {
+    background: var(--bg-surface);
+    color: var(--color-primary);
+}
+
+.button-light:hover {
+    background: #EAE5F5;
+    box-shadow: var(--shadow-md);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* =========================
+   SEÇÕES
+========================= */
+
+.about,
+.highlights,
+.projects,
+.donations,
+.contact,
+.form-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+}
+
+.section-heading {
+    grid-column: 1 / -1;
+}
+
+.section-heading h2,
+.about h2,
+.donations h2,
+.contact h2,
+.volunteer h2,
+.call-to-action h2 {
+    font-size: var(--font-lg);
+    line-height: 1.2;
+    margin-bottom: var(--space-2);
+}
+
+.about-content {
+    grid-column: 5 / span 7;
+}
+
+.about-content p,
+.contact-content p {
+    margin-bottom: var(--space-2);
+}
+
+.contact-content {
+    grid-column: 5 / span 7;
+}
+
+.contact-content a {
+    color: var(--text-link);
+    font-weight: bold;
+}
+
+/* =========================
+   CARDS
+   Grid explícito: o número de colunas por linha
+   é definido diretamente em cada breakpoint,
+   em vez de calculado por porcentagem no flex.
+   Mobile (padrão): 1 coluna
+   >= 769px: 2 colunas
+   >= 1024px: 3 colunas (apenas .card-grid)
+========================= */
+
+.card-grid,
+.project-grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-3);
+}
+
+.info-card,
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+}
+
+.info-card:hover,
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-secondary);
+}
+
+.card-icon {
+    font-size: 2rem;
+}
+
+.project-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.project-card-header .badge {
+    margin-bottom: 0;
+}
+
+.project-card h3,
+.info-card h3 {
+    font-size: 1.4rem;
+}
+
+.project-card h4 {
+    color: var(--color-secondary);
+}
+
+/* =========================
+   PÁGINA DE PROJETOS
+========================= */
+
+.page-intro {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-5);
+}
+
+.page-intro > * {
+    grid-column: 2 / span 9;
+}
+
+.page-intro h1 {
+    font-size: var(--font-xl);
+    line-height: 1.15;
+    margin-bottom: var(--space-2);
+}
+
+.page-intro p {
+    font-size: var(--font-md);
+    color: var(--text-secondary);
+}
+
+.donations {
+    display: grid;
+}
+
+.donations > * {
+    grid-column: 1 / -1;
+}
+
+/* =========================
+   ALERT
+========================= */
+
+.alert {
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    border-left: 5px solid;
+}
+
+.alert-info {
+    background: var(--state-info-bg);
+    color: var(--state-info-text);
+    border-color: var(--color-info);
+}
+.projects > .alert {
+    grid-column: 1 / -1;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.call-to-action,
+.volunteer {
+    width: 100%;
+    padding: var(--space-6) 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    background: linear-gradient(
+        135deg,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+    color: var(--text-inverse);
+}
+
+.call-to-action p,
+.volunteer p {
+    max-width: 700px;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.form-section {
+    display: block;
+}
+
+.form-section .section-heading {
+    margin-bottom: var(--space-4);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+}
+
+legend {
+    padding: 0 var(--space-1);
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(91, 42, 134, 0.15);
+    outline: none;
+}
+
+input:focus:valid,
+select:focus:valid,
+textarea:focus:valid {
+    border-color: var(--color-success);
+}
+
+input:focus:invalid,
+select:focus:invalid,
+textarea:focus:invalid {
+    border-color: var(--color-error);
+}
+
+input.valid,
+select.valid,
+textarea.valid {
+    border-color: var(--color-success);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+    border-color: var(--color-error);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-weight: normal;
+}
+
+.checkbox-label input {
+    width: auto;
+    margin-top: 5px;
+}
+
+.submit-button {
+    align-self: flex-start;
+}
+
+/* =========================
+   MENSAGENS DE ERRO
+========================= */
+
+.error-message {
+    display: block;
+    margin-top: -12px;
+    font-size: var(--font-xs);
+    font-weight: normal;
+    color: var(--state-error-text);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 2000;
+    max-width: 360px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    background: var(--color-success);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition:
+        opacity var(--transition),
+        visibility var(--transition),
+        transform var(--transition);
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3);
+    background: rgba(11, 11, 15, 0.7);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: min(90%, 520px);
+    padding: var(--space-5);
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.modal-content h2 {
+    margin-bottom: var(--space-2);
+}
+
+.modal-close {
+    margin-top: var(--space-3);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    padding: var(--space-4) 5%;
+    background: var(--bg-inverse);
+    color: var(--text-inverse);
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 4px 0;
+}
+
+/* =========================================================
+   BREAKPOINT 1 - até 480px (celular pequeno)
+   - Todas as seções de texto (.hero-content, .about-content,
+     .contact-content, .page-intro > *) passam a ocupar as
+     12 colunas inteiras do grid (grid-column: 1 / -1).
+   - .info-card e .project-card: 1 por linha (via .card-grid
+     e .project-grid em repeat(1, 1fr), valor padrão).
+   - Botões e blocos de CTA empilham em coluna única.
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .site-header {
+        padding: 12px 5%;
+    }
+
+    .logo {
+        width: 100px;
+    }
+
+    .hero,
+    .about,
+    .highlights,
+    .projects,
+    .donations,
+    .contact,
+    .form-section {
+        width: 90%;
+    }
+
+    .hero-content,
+    .about-content,
+    .contact-content,
+    .page-intro > * {
+        grid-column: 1 / -1;
+    }
+
+    .hero h1,
+    .page-intro h1 {
+        font-size: 2rem;
+    }
+
+    .hero-actions,
+    .call-to-action,
+    .volunteer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .toast {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        max-width: none;
+    }
+}
+
+/* =========================================================
+   BREAKPOINT 2 - 481px a 600px (celular grande)
+   - Mesmo comportamento de coluna única do breakpoint 1
+     para os blocos de texto e para os cards.
+========================================================= */
+
+@media (min-width: 481px) and (max-width: 600px) {
+
+    .hero-content,
+    .about-content,
+    .contact-content,
+    .page-intro > * {
+        grid-column: 1 / -1;
+    }
+
+    .hero h1,
+    .page-intro h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* =========================================================
+   BREAKPOINT 3 - até 768px (tablet retrato)
+   - Menu principal vira hambúrguer (.menu-toggle visível,
+     .main-nav escondido até receber a classe .open).
+   - .info-card e .project-card: 1 por linha (coluna única),
+     empilhando verticalmente como no mobile.
+   - Blocos de texto ocupam as 12 colunas inteiras.
+   - .call-to-action e .volunteer: empilham em coluna,
+     alinhados à esquerda.
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--bg-inverse);
+        padding: var(--space-2) 5%;
+    }
+
+    .main-nav.open {
+        display: block;
+    }
+
+    .main-nav > ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+
+    .main-nav a,
+    .submenu-toggle {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    .submenu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: 0;
+        padding-left: var(--space-2);
+    }
+
+    .has-submenu.open > .submenu {
+        display: block;
+    }
+
+    .hero-content,
+    .about-content,
+    .contact-content,
+    .page-intro > * {
+        grid-column: 1 / -1;
+    }
+
+    .call-to-action,
+    .volunteer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================================================
+   BREAKPOINT 4 - 769px a 1024px (tablet paisagem / notebook)
+   - .grid-section passa a usar 92% da largura da tela.
+   - .hero-content: ocupa 10 das 12 colunas do grid.
+   - .about-content e .contact-content: ocupam 9 das 12
+     colunas, começando na coluna 4.
+   - .info-card e .project-card: 2 por linha
+     (grid-template-columns: repeat(2, 1fr)).
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .grid-section {
+        width: 92%;
+    }
+
+    .hero-content {
+        grid-column: 1 / span 10;
+    }
+
+    .about-content,
+    .contact-content {
+        grid-column: 4 / span 9;
+    }
+
+    .card-grid,
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================================================
+   BREAKPOINT 5 - a partir de 1025px (desktop)
+   - .card-grid: 3 colunas (3 .info-card por linha).
+   - .project-grid: mantém 2 colunas (2 .project-card por
+     linha), já que cada card de projeto tem mais texto.
+========================================================= */
+
+@media (min-width: 1025px) {
+
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================================================
+   BREAKPOINT 6 - a partir de 1440px (desktop grande)
+   - .grid-section: largura máxima de 1200px.
+   - .hero-content: volta a ocupar 8 das 12 colunas,
+     começando na coluna 2 (layout mais centralizado).
+   - .about-content e .contact-content: 7 das 12 colunas,
+     começando na coluna 5.
+========================================================= */
+
+@media (min-width: 1440px) {
+
+    .grid-section {
+        width: min(1200px, 85%);
+    }
+
+    .hero {
+        min-height: 600px;
+    }
+
+    .hero-content {
+        grid-column: 2 / span 8;
+    }
+
+    .hero h1,
+    .page-intro h1 {
+        font-size: 3rem;
+    }
+
+    .about-content,
+    .contact-content {
+        grid-column: 5 / span 7;
+    }
+
+    .site-header {
+        padding-left: 8%;
+        padding-right: 8%;
+    }
+}
