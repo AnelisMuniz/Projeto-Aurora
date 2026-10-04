@@ -30,13 +30,36 @@ jobs:
       - name: Gerar build
         run: npm run build
 
+      - name: Preparar publicação
+        run: |
+          mkdir -p public/html
+          cp -r dist/* public/html/
+
+          cat > public/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="refresh" content="0; url=html/">
+              <title>CONECTA | Inclusão Digital</title>
+          </head>
+          <body>
+              <p>
+                  Redirecionando para o site da CONECTA...
+                  <a href="html/">Clique aqui se o redirecionamento não acontecer.</a>
+              </p>
+          </body>
+          </html>
+          EOF
+
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Fazer upload do build
+      - name: Fazer upload do site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./public
 
   deploy:
     environment:
