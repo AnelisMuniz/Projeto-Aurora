@@ -56,6 +56,33 @@
 
     --transition: 0.25s ease;
 }
+/* =========================
+   MODO ESCURO
+========================= */
+
+[data-theme="dark"] {
+    --bg-page: #12131A;
+    --bg-surface: #2b2f41;
+    --bg-inverse: #0B0B0F;
+
+    --text-primary: #F5F5F7;
+    --text-secondary: #E4E4EC;
+    --text-inverse: #FFFFFF;
+    --text-link: #DCCBFF;
+
+    --border-default: #77798A;
+    --border-subtle: #444653;
+    --border-focus: #D0B5FF;
+
+    --state-success-bg: #173D2B;
+    --state-success-text: #8FE0B3;
+
+    --state-error-bg: #4A201D;
+    --state-error-text: #FF9B91;
+
+    --state-info-bg: #4867b5;
+    --state-info-text: #B9C9FF;
+}
 
 * {
     box-sizing: border-box;
@@ -213,6 +240,33 @@ textarea {
     background: var(--text-inverse);
     border-radius: 10px;
     transition: transform var(--transition);
+}
+
+/* =========================
+   SELETOR DE TEMA
+========================= */
+
+.theme-toggle {
+    min-height: 42px;
+    padding: 8px 14px;
+    border: 1px solid var(--text-inverse);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-inverse);
+    cursor: pointer;
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition);
+}
+
+.theme-toggle:hover {
+    background: var(--color-secondary);
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
 }
 
 /* =========================
@@ -851,6 +905,10 @@ textarea.invalid {
     .menu-toggle {
         display: block;
     }
+
+    .theme-toggle {
+    display: block;
+}
 
     .main-nav {
         display: none;

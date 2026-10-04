@@ -73,10 +73,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Escuta mudanças de hash: clique em link, ou botão voltar/avançar do navegador
     window.addEventListener("hashchange", renderRoute);
 
-    // Menu e submenu ficam no cabeçalho: são conectados uma única vez
-    bindMenuEvents();
+    // Menu, submenu e seletor de tema ficam no cabeçalho:
+// são conectados uma única vez
+bindMenuEvents();
+bindThemeEvents();
 
-    // Primeira renderização, assim que a página carrega
-    renderRoute();
-
+// Primeira renderização, assim que a página carrega
+renderRoute();
 });

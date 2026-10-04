@@ -1,0 +1,76 @@
+name: Deploy CONECTA
+
+on:
+  push:
+    branches:
+      - feature/local-storage
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar build
+        run: npm run build
+
+      - name: Preparar publicação
+        run: |
+          mkdir -p public/html
+          cp -r dist/* public/html/
+
+          cat > public/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="refresh" content="0; url=html/">
+              <title>CONECTA | Inclusão Digital</title>
+          </head>
+          <body>
+              <p>
+                  Redirecionando para o site da CONECTA...
+                  <a href="html/">Clique aqui se o redirecionamento não acontecer.</a>
+              </p>
+          </body>
+          </html>
+          EOF
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Fazer upload do site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
