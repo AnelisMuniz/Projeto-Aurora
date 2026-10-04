@@ -1,0 +1,58 @@
+name: Deploy CONECTA
+
+on:
+  push:
+    branches:
+      - feature/local-storage
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar build
+        run: npm run build
+
+      - name: Preparar publicação
+        run: |
+          mkdir -p public/html
+          cp -r dist/* public/html/
+
+          cat > public/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="refresh" content="0; url=html/">
+              <title>CONECTA | Inclusão Digital</title>
+          </head>
+          <body>
+              <p>
+                  Redirecionando para o site da CONECTA...
+                  <a href="html/">Clique aqui se o redirecionamento não acontecer.</a>
+              </p>
+          </body>
+          </html>
+          EOF
+
+      - name: Publicar no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

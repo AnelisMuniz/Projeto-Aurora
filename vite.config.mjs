@@ -13,7 +13,9 @@ const arquivosJS = [
 
 export default defineConfig({
 
-    root: projetoRoot,
+    root: fileURLToPath(
+        new URL("./html", import.meta.url)
+    ),
 
     base: "./",
 
@@ -52,13 +54,7 @@ export default defineConfig({
 
     build: {
 
-        rollupOptions: {
-            input: fileURLToPath(
-                new URL("./html/index.html", import.meta.url)
-            )
-        },
-
-        outDir: "html/dist",
+        outDir: "../dist",
 
         emptyOutDir: true
 
